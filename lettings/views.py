@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from .models import Letting
 
 
@@ -6,10 +7,10 @@ from .models import Letting
 # Sed non placerat massa. Integer est nunc, pulvinar a
 # tempor et, bibendum id arcu. Vestibulum ante ipsum primis in faucibus orci
 # luctus et ultrices posuere cubilia curae; Cras eget scelerisque
-def lettings_index(request):
+def index(request):
     lettings_list = Letting.objects.all()
     context = {'lettings_list': lettings_list}
-    return render(request, 'lettings_index.html', context)
+    return render(request, 'lettings/index.html', context)
 
 
 # Cras ultricies dignissim purus, vitae hendrerit ex varius non. In accumsan
@@ -30,4 +31,4 @@ def letting(request, letting_id):
         'title': letting.title,
         'address': letting.address,
     }
-    return render(request, 'letting.html', context)
+    return render(request, 'lettings/letting.html', context)
