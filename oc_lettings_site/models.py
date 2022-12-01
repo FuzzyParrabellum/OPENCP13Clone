@@ -20,14 +20,16 @@ class Address(models.Model):
 
 class Letting(models.Model):
     title = models.CharField(max_length=256)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, \
+                                    related_name='+')
 
     def __str__(self):
         return self.title
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, \
+                                related_name='+')
     favorite_city = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
