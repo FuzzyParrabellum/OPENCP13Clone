@@ -36,7 +36,7 @@ jobs:
       #     command: pylint my_media/ media_organizer/
       - run:
           name: run tests
-          command: python manage.py pytest
+          command: python3 manage.py pytest
 
 workflows:
   build-and-test-workflow:
