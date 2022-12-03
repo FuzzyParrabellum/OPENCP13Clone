@@ -36,7 +36,10 @@ jobs:
       #     command: pylint my_media/ media_organizer/
       - run:
           name: run tests
-          command: python3 manage.py pytest
+          command: pytest
+      - run:
+          name: lint app
+          command: flake8
 
 workflows:
   build-and-test-workflow:
