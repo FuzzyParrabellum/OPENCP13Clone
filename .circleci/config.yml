@@ -67,7 +67,7 @@ workflows:
               only: master # only deploy when on main
       - heroku/deploy-via-git:
           requires:
-            - build_and_test
+            - contenerize
               # post-steps:
               #   - run: your-database-migration-command 
       # - deploy:
