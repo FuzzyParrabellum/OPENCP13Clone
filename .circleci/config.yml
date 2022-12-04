@@ -69,7 +69,7 @@ workflows:
           requires:
             - contenerize
           post-steps:
-            - run: heroku run python manage.py migrate
+            - run: heroku run -a oc-lettings-8803 python manage.py migrate
       # - deploy:
       #     requires:
       #       - contenerize
