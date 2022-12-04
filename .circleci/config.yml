@@ -24,11 +24,14 @@ jobs:
           command: flake8
   contenerize:
     docker:
-      - image: python:3.10.8-bullseye
+      - image: cimg/base:2022.06
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.18
           docker_layer_caching: true
       - run: |
           echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
