@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build-and-test:
+  build_and_test:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -22,10 +22,28 @@ jobs:
       - run:
           name: lint app
           command: flake8
+  contenerize:
+    docker:
+      - image: python:3.10.8-bullseye
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+      - run: |
+          echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - run: docker build -t $DOCKERHUB_USERNAME/Project13:CircleCI .
+      - run: docker push $DOCKERHUB_USERNAME/Project13:CircleCI
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  build-and-test-workflow:
+  build_test_contenerize_deploy:
     jobs:
-      - build-and-test
+      - build_and_test
+      - contenerize:
+          requires:
+            - build_and_test # only deploy if the build_and_test job has completed
+          filters:
+            branches:
+              only: main # only deploy when on main
