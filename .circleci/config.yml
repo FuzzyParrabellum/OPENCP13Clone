@@ -68,8 +68,8 @@ workflows:
       - heroku/deploy-via-git:
           requires:
             - contenerize
-              # post-steps:
-              #   - run: your-database-migration-command 
+          post-steps:
+            - run: heroku python manage.py migrate
       # - deploy:
       #     requires:
       #       - contenerize
