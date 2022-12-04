@@ -35,8 +35,8 @@ jobs:
           docker_layer_caching: true
       - run: |
           echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
-      - run: docker build -t $DOCKERHUB_USERNAME/Project13:CircleCI .
-      - run: docker push $DOCKERHUB_USERNAME/Project13:CircleCI
+      - run: docker build -t $DOCKERHUB_USERNAME/project13:CircleCI .
+      - run: docker push $DOCKERHUB_USERNAME/project13:CircleCI
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
