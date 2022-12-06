@@ -1,15 +1,9 @@
 version: 2.1
 
-# orbs:
-#   heroku: circleci/heroku@0.0.10
 jobs:
   build_and_test:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: python:3.10.8-slim-bullseye
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
       - run:
@@ -21,6 +15,7 @@ jobs:
       - run:
           name: lint app
           command: flake8
+
   contenerize:
     docker:
       - image: cimg/base:2022.06
@@ -32,23 +27,18 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
           docker_layer_caching: true
-      - run: |
+      - run: 
+          name: login with docker
+          command: |
           echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
-      - run: docker build -t $DOCKERHUB_USERNAME/project13:$CIRCLE_SHA1 .
-      - run: docker push $DOCKERHUB_USERNAME/project13:CIRCLE_SHA1
+      - run: 
+          name: build docker image with Dockerfile and add CircleCI tag hash
+          command: docker build -t $DOCKERHUB_USERNAME/project13:$CIRCLE_SHA1 .
+      - run: 
+          name: push docker image to dockerhub
+          command: docker push $DOCKERHUB_USERNAME/project13:$CIRCLE_SHA1
 
-  # deploy:
-  #   machine: true
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Build and push Docker image to Heroku
-  #         command: |
-  #           sudo curl https://cli-assets.heroku.com/install.sh | sh
-  #           HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-  #           HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a oc-lettings-8803 web
-  #           HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-8803 web
-  deploy:
+  deploy_to_heroku:
     docker:
         - image: cimg/base:2022.06
           auth:
@@ -61,8 +51,6 @@ jobs:
             command: |
               git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   version: 2
   build_test_contenerize_deploy:
@@ -74,13 +62,6 @@ workflows:
           filters:
             branches:
               only: master # only deploy when on main
-
-      # - heroku/deploy-via-git:
-      #     requires:
-      #       - contenerize
-      #     post-steps:
-      #       - run: heroku run -a oc-lettings-8803 python manage.py migrate profiles 0001_initial
-      #       - run: heroku run -a oc-lettings-8803 python manage.py migrate lettings 0001_initial
-      - deploy:
+      - deploy_to_heroku:
           requires:
             - contenerize
