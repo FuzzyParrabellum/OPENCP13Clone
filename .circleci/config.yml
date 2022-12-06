@@ -30,7 +30,7 @@ jobs:
       - run: 
           name: login with docker
           command: |
-          echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - run: 
           name: build docker image with Dockerfile and add CircleCI tag hash
           command: docker build -t $DOCKERHUB_USERNAME/project13:$CIRCLE_SHA1 .
