@@ -10,8 +10,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sentry_sdk.init(
-    dsn='''https://d5b86a9ce13447cc90a56c1e9ecf23bd@o4504241035280384.ingest.
-    sentry.io/4504276177846272''',
+    dsn=os.environ.get('SENTRY_DSN'),
     integrations=[
         DjangoIntegration(),
     ],
