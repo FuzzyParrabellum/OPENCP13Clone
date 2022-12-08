@@ -75,6 +75,10 @@ workflows:
           post-steps:
             - run: ls
             - run: cat data.json
+            - run: heroku run -a oc-lettings-clone python manage.py migrate auth
+            - run: heroku run -a oc-lettings-clone python manage.py migrate admin
+            - run: heroku run -a oc-lettings-clone python manage.py migrate contenttype
+            - run: heroku run -a oc-lettings-clone python manage.py migrate sessions
             - run: heroku run -a oc-lettings-clone python manage.py migrate profiles 0001_initial
             - run: heroku run -a oc-lettings-clone python manage.py migrate lettings 0001_initial
             - run: heroku run -a oc-lettings-clone python3 manage.py loaddata data.json
