@@ -67,4 +67,4 @@ workflows:
             - contenerize
           post-steps:
             - run: sudo curl https://cli-assets.heroku.com/install.sh | sh
-            - run: heroku logs --tail
+            - run: heroku logs --tail -a oc-lettings-clone
