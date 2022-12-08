@@ -13,6 +13,9 @@ WORKDIR /code
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
+# Added step go get sqlite db info
+RUN python3 manage.py dumpdata --exclude contenttypes > data.json
+
 # Copy project
 COPY . .
 
