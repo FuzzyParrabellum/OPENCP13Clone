@@ -1,5 +1,5 @@
 CIRCLE CI PIPELINE STATUS
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/FuzzyParrabellum/OPENCP13/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/FuzzyParrabellum/OPENCP13/tree/master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/FuzzyParrabellum/OPENCP13Clone/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/FuzzyParrabellum/OPENCP13Clone/tree/master)
 
 ## Résumé
 Projet cloné de OPENCP13

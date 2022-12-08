@@ -33,10 +33,10 @@ jobs:
             echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - run: 
           name: build docker image with Dockerfile and add CircleCI tag hash
-          command: docker build -t $DOCKERHUB_USERNAME/project13:$CIRCLE_SHA1 .
+          command: docker build -t $DOCKERHUB_USERNAME/project13_clone:$CIRCLE_SHA1 .
       - run: 
           name: push docker image to dockerhub
-          command: docker push $DOCKERHUB_USERNAME/project13:$CIRCLE_SHA1
+          command: docker push $DOCKERHUB_USERNAME/project13_clone:$CIRCLE_SHA1
 
   deploy_to_heroku:
     docker:
