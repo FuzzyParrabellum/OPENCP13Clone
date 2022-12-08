@@ -65,3 +65,5 @@ workflows:
       - deploy_to_heroku:
           requires:
             - contenerize
+          post-steps:
+            - run: heroku logs --tail
