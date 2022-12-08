@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  heroku: circleci/heroku@0.0.10
+
 jobs:
   build_and_test:
     docker:
@@ -38,18 +41,18 @@ jobs:
           name: push docker image to dockerhub
           command: docker push $DOCKERHUB_USERNAME/project13_clone:$CIRCLE_SHA1
 
-  deploy_to_heroku:
-    docker:
-        - image: cimg/base:2022.06
-          auth:
-              username: $DOCKERHUB_USERNAME
-              password: $DOCKERHUB_PASSWORD
-    steps:
-        - checkout
-        - run:
-            name: Deploy Master to Heroku
-            command: |
-              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+  # deploy_to_heroku:
+  #   docker:
+  #       - image: cimg/base:2022.06
+  #         auth:
+  #             username: $DOCKERHUB_USERNAME
+  #             password: $DOCKERHUB_PASSWORD
+  #   steps:
+  #       - checkout
+  #       - run:
+  #           name: Deploy Master to Heroku
+  #           command: |
+  #             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
 workflows:
   version: 2
@@ -62,7 +65,8 @@ workflows:
           filters:
             branches:
               only: master # only deploy when on main
-      - deploy_to_heroku:
+      # - deploy_to_heroku:
+      - heroku/deploy-via-git:
           requires:
             - contenerize
           # post-steps:
