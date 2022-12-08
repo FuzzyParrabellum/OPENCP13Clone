@@ -16,8 +16,10 @@ RUN pip install -r requirements.txt
 # Copy project
 COPY . .
 
+RUN listdir('.')
 # Added step go get sqlite db info
 RUN python3 manage.py dumpdata --exclude contenttypes > data.json
+RUN listdir('.')
 # Run project on port 8000 to be accessible at localhost:8000
 EXPOSE 8000
 CMD python3 manage.py runserver 0.0.0.0:8000
