@@ -13,11 +13,12 @@ WORKDIR /code
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
+COPY ./oc-lettings-site.sqlite3 .
+# Added step go get sqlite db info
+RUN python3 ./manage.py dumpdata --exclude contenttypes > data.json
+
 # Copy project
 COPY . .
-
-# Added step go get sqlite db info
-RUN python3 manage.py dumpdata --exclude contenttypes > data.json
 
 # Run project on port 8000 to be accessible at localhost:8000
 EXPOSE 8000
