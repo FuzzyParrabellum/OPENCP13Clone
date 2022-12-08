@@ -72,6 +72,6 @@ workflows:
           post-steps:
             - run: heroku run -a oc-lettings-clone python manage.py migrate profiles 0001_initial
             - run: heroku run -a oc-lettings-clone python manage.py migrate lettings 0001_initial
-            - run: heroku run python3 manage.py loaddata data.json
+            - run: heroku run -a oc-lettings-clone python3 manage.py loaddata data.json
           #   - run: sudo curl https://cli-assets.heroku.com/install.sh | sh
           #   - run: heroku logs --tail -a oc-lettings-clone
