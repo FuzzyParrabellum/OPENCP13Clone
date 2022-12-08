@@ -65,6 +65,6 @@ workflows:
       - deploy_to_heroku:
           requires:
             - contenerize
-          post-steps:
-            - run: sudo curl https://cli-assets.heroku.com/install.sh | sh
-            - run: heroku logs --tail -a oc-lettings-clone
+          # post-steps:
+          #   - run: sudo curl https://cli-assets.heroku.com/install.sh | sh
+          #   - run: heroku logs --tail -a oc-lettings-clone
